@@ -1,24 +1,24 @@
 import { useContext } from "react";
-import { EventContext } from "./EventContext";
+import { RecipeContext } from "./RecipeContext";
 import Button from "react-bootstrap/esm/Button.js";
 import { useNavigate } from "react-router-dom";
 
-import EventDateTimeBadge from "./EventDateTimeBadge";
-import EventDetail from "./EventDetail";
+import RecipeDateTimeBadge from "./RecipeDateTimeBadge";
+import RecipeDetail from "./RecipeDetail";
 
 import Icon from "@mdi/react";
 import { mdiEyeOutline, mdiPencil } from "@mdi/js";
 
-function EventRoute({ setShowEventForm }) {
+function RecipeRoute({ setShowRecipeForm }) {
   const navigate = useNavigate();
-  const { event } = useContext(EventContext);
+  const { recipe } = useContext(RecipeContext);
 
   return (
     <div className="card border-0 shadow rounded" style={componentStyle()}>
-      {event ? (
+      {recipe ? (
         <>
-          <EventDateTimeBadge event={event} />
-          <EventDetail event={event} />
+          <RecipeDateTimeBadge recipe={recipe} />
+          <RecipeDetail recipe={recipe} />
           <div
             style={{
               display: "grid",
@@ -28,12 +28,12 @@ function EventRoute({ setShowEventForm }) {
             }}
           >
             <Button
-              onClick={() => navigate("/eventDetail?id=" + event.id)}
+              onClick={() => navigate("/recipeDetail?id=" + recipe.id)}
               size={"sm"}
             >
               <Icon path={mdiEyeOutline} size={0.7} />
             </Button>
-            <Button onClick={() => setShowEventForm(event)} size={"sm"}>
+            <Button onClick={() => setShowRecipeForm(recipe)} size={"sm"}>
               <Icon path={mdiPencil} size={0.7} />
             </Button>
           </div>
@@ -56,4 +56,4 @@ function componentStyle() {
   };
 }
 
-export default EventRoute;
+export default RecipeRoute;
