@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { EventListContext } from "./EventListContext.js";
+import { RecipeContext } from "./RecipeContext.js";
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -10,28 +10,28 @@ import Alert from "react-bootstrap/Alert";
 import Icon from "@mdi/react";
 import { mdiLoading } from "@mdi/js";
 
-function EventForm({ setShowEventForm, event }) {
-  const { state, handlerMap } = useContext(EventListContext);
+function RecipeForm({ setShowRecipeForm, recipe }) {
+  const { state, handlerMap } = useContext(RecipeContext);
   const [showAlert, setShowAlert] = useState(null);
   const isPending = state === "pending";
 
   return (
-    <Modal show={true} onHide={() => setShowEventForm(false)}>
+    <Modal show={true} onHide={() => setShowRecipeForm(false)}>
       <Form
         onSubmit={async (e) => {
           e.preventDefault();
           e.stopPropagation();
           var formData = Object.fromEntries(new FormData(e.target));
-          formData.date = new Date(formData.date).toISOString();
+          // Process form data as needed
           try {
-            if (event.id) {
-              formData.id = event.id;
+            if (recipe.id) {
+              formData.id = recipe.id;
               await handlerMap.handleUpdate(formData);
             } else {
               await handlerMap.handleCreate(formData);
             }
 
-            setShowEventForm(false);
+            setShowRecipeForm(false);
           } catch (e) {
             console.error(e);
             setShowAlert(e.message);
@@ -39,10 +39,8 @@ function EventForm({ setShowEventForm, event }) {
         }}
       >
         <Modal.Header>
-          <Modal.Title>{`${
-            event.id ? "Upravit" : "Vytvořit"
-          } událost`}</Modal.Title>
-          <CloseButton onClick={() => setShowEventForm(false)} />
+          <Modal.Title>{`${recipe.id ? "Edit" : "Create"} Recipe`}</Modal.Title>
+          <CloseButton onClick={() => setShowRecipeForm(false)} />
         </Modal.Header>
         <Modal.Body style={{ position: "relative" }}>
           <Alert
@@ -51,7 +49,7 @@ function EventForm({ setShowEventForm, event }) {
             dismissible
             onClose={() => setShowAlert(null)}
           >
-            <Alert.Heading>Nepodařilo se vytvořit událost</Alert.Heading>
+            <Alert.Heading>Failed to create recipe</Alert.Heading>
             <pre>{showAlert}</pre>
           </Alert>
 
@@ -61,37 +59,18 @@ function EventForm({ setShowEventForm, event }) {
             </div>
           ) : null}
 
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Datum konání</Form.Label>
-            <Form.Control
-              type="datetime-local"
-              name="date"
-              required
-              defaultValue={
-                event.date ? eventDateToInput(event.date) : undefined
-              }
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Název událost</Form.Label>
-            <Form.Control
-              type="text"
-              name="name"
-              required
-              defaultValue={event.name}
-            />
-          </Form.Group>
+          {/* Form fields */}
         </Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"
-            onClick={() => setShowEventForm(false)}
+            onClick={() => setShowRecipeForm(false)}
             disabled={isPending}
           >
-            Zavřít
+            Close
           </Button>
           <Button type="submit" variant="primary" disabled={isPending}>
-            {event.id ? "Upravit" : "Vytvořit"}
+            {recipe.id ? "Edit" : "Create"}
           </Button>
         </Modal.Footer>
       </Form>
@@ -114,14 +93,4 @@ function pendingStyle() {
   };
 }
 
-function eventDateToInput(date) {
-  date = new Date(date);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-  return `${year}-${month}-${day}T${hours}:${minutes}`;
-}
-
-export default EventForm;
+export default RecipeForm;
