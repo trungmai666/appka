@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
-
 import { useContext } from "react";
-import { UserContext } from "./UserContext";
+import { RecipeContext } from "./RecipeContext";
 
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -9,11 +8,11 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 import Icon from "@mdi/react";
-import { mdiVolleyball, mdiLogout } from "@mdi/js";
+import { mdiFoodApple, mdiLogout } from "@mdi/js";
 import Button from "react-bootstrap/esm/Button";
 
-function NavBar() {
-  const { userList, loggedInUser, handlerMap } = useContext(UserContext);
+function Navbar() {
+  const { userList, loggedInUser, handlerMap } = useContext(RecipeContext);
   const navigate = useNavigate();
 
   return (
@@ -21,13 +20,13 @@ function NavBar() {
       <Container>
         <Navbar.Brand>
           <Button style={brandStyle()} onClick={() => navigate("/")}>
-            <Icon path={mdiVolleyball} size={1} color={"white"} spin={5} />
-            VOLEJBALALÁCI
+            <Icon path={mdiFoodApple} size={1} color={"white"} spin={5} />
+            Recipe Manager
           </Button>
         </Navbar.Brand>
         <Nav>
           <NavDropdown
-            title={loggedInUser ? loggedInUser.name : "Přihlaš se"}
+            title={loggedInUser ? loggedInUser.name : "Login"}
             drop={"start"}
           >
             {getUserMenuList({ userList, loggedInUser, handlerMap })}
@@ -52,7 +51,6 @@ function brandStyle() {
 }
 
 function getUserMenuList({ userList, loggedInUser, handlerMap }) {
-  // temporary solution to enable login/logout
   const userMenuItemList = userList.map((user) => (
     <NavDropdown.Item key={user.id} onClick={() => handlerMap.login(user.id)}>
       {user.name}
@@ -67,7 +65,7 @@ function getUserMenuList({ userList, loggedInUser, handlerMap }) {
         onClick={() => handlerMap.logout()}
         style={{ color: "red" }}
       >
-        <Icon path={mdiLogout} size={0.8} color={"red"} /> {"Odhlas se"}
+        <Icon path={mdiLogout} size={0.8} color={"red"} /> {"Logout"}
       </NavDropdown.Item>
     );
   }
@@ -75,4 +73,5 @@ function getUserMenuList({ userList, loggedInUser, handlerMap }) {
   return userMenuItemList;
 }
 
-export default NavBar;
+export default Navbar;
+
