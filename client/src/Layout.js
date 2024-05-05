@@ -12,7 +12,7 @@ const Layout = () => {
         <Outlet />
       </div>
       <div className={"card-footer text-light"} style={footerStyle()}>
-        © Ivo Milota
+        © Mai Thanh Trung
       </div>
     </>
   );
