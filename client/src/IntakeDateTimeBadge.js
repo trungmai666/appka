@@ -1,14 +1,14 @@
-function EventDateTimeBadge({ event }) {
-  const dateToShow = new Date(event.date);
+function IntakeDateTimeBadge({ recipe }) {
+  const dateToShow = new Date(recipe.date);
 
   return (
     <div className={"rounded"} style={componentStyle()}>
       <div className={"rounded"} style={dateStyle()}>
         <div>{dateToShow.getDate().toString().padStart(2, "0")}</div>
-        <div>{dateToShow.toLocaleString("cs-CZ", { month: "short" })}</div>
+        <div>{dateToShow.toLocaleString("en-US", { month: "short" })}</div>
       </div>
       <div className={"rounded-bottom"} style={timeStyle()}>
-        {dateToShow.toLocaleString("cs-CZ", { timeStyle: "short" })}
+        {dateToShow.toLocaleString("en-US", { timeStyle: "short" })}
       </div>
     </div>
   );
@@ -47,4 +47,5 @@ function timeStyle() {
   };
 }
 
-export default EventDateTimeBadge;
+export default IntakeDateTimeBadge;
+
