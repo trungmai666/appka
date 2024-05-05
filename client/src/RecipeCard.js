@@ -1,19 +1,19 @@
 import Button from "react-bootstrap/esm/Button.js";
 import { useNavigate } from "react-router-dom";
 
-import EventDateTimeBadge from "./EventDateTimeBadge";
-import EventDetail from "./EventDetail";
+import RecipeDateTimeBadge from "./RecipeDateTimeBadge";
+import RecipeDetail from "./RecipeDetail";
 
 import Icon from "@mdi/react";
 import { mdiEyeOutline, mdiPencil, mdiTrashCanOutline } from "@mdi/js";
 
-function EventCard({ event, setShowEventForm, setShowConfirmDeleteDialog }) {
+function RecipeCard({ recipe, setShowRecipeForm, setShowConfirmDeleteDialog }) {
   const navigate = useNavigate();
 
   return (
     <div className="card border-0 shadow rounded" style={componentStyle()}>
-      <EventDateTimeBadge event={event} />
-      <EventDetail event={event} />
+      <RecipeDateTimeBadge recipe={recipe} />
+      <RecipeDetail recipe={recipe} />
       <div
         style={{
           display: "grid",
@@ -23,16 +23,16 @@ function EventCard({ event, setShowEventForm, setShowConfirmDeleteDialog }) {
         }}
       >
         <Button
-          onClick={() => navigate("/eventDetail?id=" + event.id)}
+          onClick={() => navigate("/recipeDetail?id=" + recipe.id)}
           size={"sm"}
         >
           <Icon path={mdiEyeOutline} size={0.7} />
         </Button>
-        <Button onClick={() => setShowEventForm(event)} size={"sm"}>
+        <Button onClick={() => setShowRecipeForm(recipe)} size={"sm"}>
           <Icon path={mdiPencil} size={0.7} />
         </Button>
         <Button
-          onClick={() => setShowConfirmDeleteDialog(event)}
+          onClick={() => setShowConfirmDeleteDialog(recipe)}
           size={"sm"}
           variant="danger"
         >
@@ -54,4 +54,5 @@ function componentStyle() {
   };
 }
 
-export default EventCard;
+export default RecipeCard;
+
