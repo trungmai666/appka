@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { EventListContext } from "./EventListContext.js";
+import { EventListContext } from "./RecipeListContext.js";
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -10,14 +10,14 @@ import Icon from "@mdi/react";
 import { mdiLoading } from "@mdi/js";
 
 function ConfirmDeleteDialog({ setShowConfirmDeleteDialog, event }) {
-  const { state, handlerMap } = useContext(EventListContext);
+  const { state, handlerMap } = useContext(RecipeListContext);
   const [showAlert, setShowAlert] = useState(null);
   const isPending = state === "pending";
 
   return (
     <Modal show={true} onHide={() => setShowConfirmDeleteDialog(false)}>
       <Modal.Header>
-        <Modal.Title>Smazat událost</Modal.Title>
+        <Modal.Title>Delete Recipe</Modal.Title>
         <CloseButton onClick={() => setShowConfirmDeleteDialog(false)} />
       </Modal.Header>
       <Modal.Body style={{ position: "relative" }}>
@@ -27,7 +27,7 @@ function ConfirmDeleteDialog({ setShowConfirmDeleteDialog, event }) {
           dismissible
           onClose={() => setShowAlert(null)}
         >
-          <Alert.Heading>Nepodařilo se vytvořit událost</Alert.Heading>
+          <Alert.Heading>Failed to create a recipe</Alert.Heading>
           <pre>{showAlert}</pre>
         </Alert>
         {isPending ? (
@@ -35,7 +35,7 @@ function ConfirmDeleteDialog({ setShowConfirmDeleteDialog, event }) {
             <Icon path={mdiLoading} size={2} spin />
           </div>
         ) : null}
-        Opravdu chcete smazat událost {event.name}?
+        Cofirm deletion {event.name}?
       </Modal.Body>
       <Modal.Footer>
         <Button
@@ -43,7 +43,7 @@ function ConfirmDeleteDialog({ setShowConfirmDeleteDialog, event }) {
           onClick={() => setShowConfirmDeleteDialog(false)}
           disabled={isPending}
         >
-          Zavřít
+          Close
         </Button>
         <Button
           type="submit"
@@ -59,7 +59,7 @@ function ConfirmDeleteDialog({ setShowConfirmDeleteDialog, event }) {
             }
           }}
         >
-          Smazat
+          Delete
         </Button>
       </Modal.Footer>
     </Modal>
