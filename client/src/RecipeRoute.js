@@ -3,7 +3,7 @@ import { RecipeContext } from "./RecipeContext";
 import Button from "react-bootstrap/esm/Button.js";
 import { useNavigate } from "react-router-dom";
 
-import RecipeDateTimeBadge from "./RecipeDateTimeBadge";
+import IntakeDateTimeBadge from "./RecipeDateTimeBadge";
 import RecipeDetail from "./RecipeDetail";
 
 import Icon from "@mdi/react";
@@ -17,8 +17,8 @@ function RecipeRoute({ setShowRecipeForm }) {
     <div className="card border-0 shadow rounded" style={componentStyle()}>
       {recipe ? (
         <>
-          <RecipeDateTimeBadge recipe={recipe} />
-          <RecipeDetail recipe={recipe} />
+          <IntakeDateTimeBadge recipe={recipe} />
+          <IntakeDetail recipe={recipe} />
           <div
             style={{
               display: "grid",
@@ -28,7 +28,7 @@ function RecipeRoute({ setShowRecipeForm }) {
             }}
           >
             <Button
-              onClick={() => navigate("/recipeDetail?id=" + recipe.id)}
+              onClick={() => navigate("/IntakeDetail?id=" + recipe.id)}
               size={"sm"}
             >
               <Icon path={mdiEyeOutline} size={0.7} />
